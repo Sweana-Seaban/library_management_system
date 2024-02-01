@@ -5,11 +5,11 @@ const sequelize =new Sequelize('library_management_system','root','password',{
     dialect:'mysql'
 })
 
-sequelize.authenticate().then(() => {
-    console.log('Connected to database successfully');
-}).catch(() => {
-    console.log('Error while connecting to database');
-})
+// sequelize.authenticate().then(() => {
+//     console.log('Connected to database successfully');
+// }).catch(() => {
+//     console.log('Error while connecting to database');
+// })
 
 const User = sequelize.define('user',{
     user_id:{
@@ -23,8 +23,20 @@ const User = sequelize.define('user',{
     user_type:DataTypes.STRING
 },{timestamps:false})
 
-User.sync({alter:true}).then(() => {
-    console.log('Users table created successfully');
-}).catch(() => {
-    console.log('Error while table creation');
-})
+// User.sync({alter:true}).then(() => {
+//     console.log('Users table created successfully');
+// }).catch(() => {
+//     console.log('Error while table creation');
+// })
+
+//select all
+const selectUsers = async() => {
+    return await User.findAll();
+}
+
+//select by id
+const selectUserById = async(id) => {
+    return await User.findbyPk(id)
+}
+
+module.exports = {selectUsers,selectUserById}
