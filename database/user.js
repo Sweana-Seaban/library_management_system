@@ -61,4 +61,12 @@ const updateUser = async(id,name,email,password,type) => {
     return user;
 }
 
-module.exports = {selectUsers,selectUserById,insertUser,updateUser}
+//delete user
+const deleteUser = async(id) => {
+    const user = User.destroy({
+        where:{user_id:id}
+    })
+    return user;
+}
+
+module.exports = {selectUsers,selectUserById,insertUser,updateUser,deleteUser}
