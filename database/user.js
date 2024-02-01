@@ -36,11 +36,11 @@ const selectUsers = async() => {
 
 //select by id
 const selectUserById = async(id) => {
-    return await User.findbyPk(id)
+    return await User.findByPk(id)
 }
 
 //insert user
-const insertuser = async(name,email,password,type) => {
+const insertUser = async(name,email,password,type) => {
     const user = User.create({
         user_name:name,
         user_email:email,
@@ -49,4 +49,16 @@ const insertuser = async(name,email,password,type) => {
     })
     return user;
 }
-module.exports = {selectUsers,selectUserById,insertuser}
+
+//update user
+const updateUser = async(id,name,email,password,type) => {
+    const user = User.update({
+        user_name:name,
+        user_email:email,
+        user_password:password,
+        user_type:type
+    },{where:{user_id:id}})
+    return user;
+}
+
+module.exports = {selectUsers,selectUserById,insertUser,updateUser}
