@@ -1,5 +1,4 @@
-const {selectUsers,selectUserById} = require('../database/user')
-
+const {selectUsers,selectUserById,insertuser} = require('../database/user')
 
 //homepage
 const homePage = (req,res) => {
@@ -19,4 +18,10 @@ const displayUserById = async(req,res) => {
     res.send(user)
 }
 
-module.exports = {homePage,displayUsers,displayUserById}
+//create user
+const createUser = async(req,res) => {
+    const {name,email,password,type} = req.body
+    const createdUser = await insertuser(name,email,password,type)
+    res.send(createdUser)
+}
+module.exports = {homePage,displayUsers,displayUserById,createUser}

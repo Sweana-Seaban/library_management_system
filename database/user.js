@@ -39,4 +39,14 @@ const selectUserById = async(id) => {
     return await User.findbyPk(id)
 }
 
-module.exports = {selectUsers,selectUserById}
+//insert user
+const insertuser = async(name,email,password,type) => {
+    const user = User.create({
+        user_name:name,
+        user_email:email,
+        user_password:password,
+        user_type:type
+    })
+    return user;
+}
+module.exports = {selectUsers,selectUserById,insertuser}
