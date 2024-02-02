@@ -38,5 +38,14 @@ const selectBook = async(id) => {
     return Book.findByPk(id);
 }
 
-module.exports = {selectBook,selectBooks
+//insert book
+const insertBook = async(title,genre,price) => {
+    const book = Book.create({
+        book_title:title,
+        book_genre:genre,
+        book_price:price
+    })
+    return(book)
 }
+
+module.exports = {selectBook,selectBooks,insertBook}
