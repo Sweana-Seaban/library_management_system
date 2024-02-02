@@ -58,6 +58,10 @@ const updateBook = async(id,title,genre,price) => {
     return(book)
 }
 
+//delete book
+const deleteBook = async(id) => {
+    const book = Book.destroy({where:{book_id:id}})
+    return(book)
+}
 
-
-module.exports = {selectBook,selectBooks,insertBook,updateBook}
+module.exports = {selectBook,selectBooks,insertBook,updateBook,deleteBook}

@@ -1,4 +1,4 @@
-const {selectBook,selectBooks,insertBook,updateBook} = require('../database/book')
+const {selectBook,selectBooks,insertBook,updateBook,deleteBook} = require('../database/book')
 
 const homePage = (req,res) => {
     res.send('Welcome to Books Page')
@@ -25,4 +25,10 @@ const modifyBook = async(req,res) => {
     const book = await updateBook(id,title,genre,price)
     res.send('Book updated succcessfully')
 }
-module.exports = {homePage,displayBook,displayBooks,createBook,modifyBook}
+
+const removeBook = async(req,res) => {
+    const id =req.params.id
+    const book = await deleteBook(id)
+    res.send('Book deleted successfully')
+}
+module.exports = {homePage,displayBook,displayBooks,createBook,modifyBook,removeBook}
