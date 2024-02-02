@@ -48,4 +48,16 @@ const insertBook = async(title,genre,price) => {
     return(book)
 }
 
-module.exports = {selectBook,selectBooks,insertBook}
+//update book
+const updateBook = async(id,title,genre,price) => {
+    const book = Book.update({
+        book_title:title,
+        book_genre:genre,
+        book_price:price
+    },{where:{book_id:id}})
+    return(book)
+}
+
+
+
+module.exports = {selectBook,selectBooks,insertBook,updateBook}
