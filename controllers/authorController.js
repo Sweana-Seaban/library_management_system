@@ -1,4 +1,4 @@
-const {selectAuthors,selectAuthor,insertAuthor,updateAuthor} = require('../database/author');
+const {selectAuthors,selectAuthor,insertAuthor,updateAuthor,deleteAuthor} = require('../database/author');
 
 
 const homePage = async(req,res) => {
@@ -27,4 +27,10 @@ const modifyAuthor = async(req,res) => {
     res.send('Author updated successfully')
 }
 
-module.exports = {homePage,displayAuthors,displayAuthor,createAuthor,modifyAuthor}
+const removeAuthor = async(req,res) => {
+    const id =req.params.id
+    const author = deleteAuthor(id)
+    res.send('Author deleted successfully')
+}
+
+module.exports = {homePage,displayAuthors,displayAuthor,createAuthor,modifyAuthor,removeAuthor}

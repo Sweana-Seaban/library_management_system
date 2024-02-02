@@ -50,4 +50,10 @@ const updateAuthor = async(id,name) => {
         author_name:name
     },{where:{author_id:id}})
 }
-module.exports ={selectAuthors,selectAuthor,insertAuthor,updateAuthor}
+
+//delete author
+const deleteAuthor = async(id) => {
+    const author = Author.destroy({where:{author_id:id}})
+}
+
+module.exports ={selectAuthors,selectAuthor,insertAuthor,updateAuthor,deleteAuthor}
