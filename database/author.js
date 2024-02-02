@@ -44,4 +44,10 @@ const insertAuthor = async(name) => {
     return(author)
 }
 
-module.exports ={selectAuthors,selectAuthor,insertAuthor}
+//update author
+const updateAuthor = async(id,name) => {
+    const author = Author.update({
+        author_name:name
+    },{where:{author_id:id}})
+}
+module.exports ={selectAuthors,selectAuthor,insertAuthor,updateAuthor}
