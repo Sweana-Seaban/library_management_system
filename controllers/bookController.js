@@ -14,8 +14,8 @@ const displayBook = async(req,res) => {
 }
 
 const createBook = async(req,res) => {
-    const {title,genre,price} = req.body
-    const book = await insertBook(title,genre,price)
+    const {title,genre,price,id} = req.body
+    const book = await insertBook(id,title,genre,price)
     res.send('Book inserted successfully')
 }
 

@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize')
 const {DataTypes,Op} = require('sequelize')
 
+
 const sequelize = new Sequelize('library_management_system','root','password',{
     dialect:'mysql'
 })
@@ -18,13 +19,15 @@ const Author = sequelize.define('author',{
         autoIncrement:true
     },
     author_name:DataTypes.STRING
-},{timestamps:false})
+},{timestamps:false});
 
-// Author.sync({alter:true}).then(() => {
-//     console.log('Authors table created successfully');
-// }).catch(() => {
-//     console.log('Error while creating table');
-// })
+
+
+Author.sync({alter:true}).then(() => {
+    console.log('Authors table created successfully');
+}).catch(() => {
+    console.log('Error while creating table');
+})
 
 //select all authors
 const selectAuthors = async() => {
@@ -57,3 +60,4 @@ const deleteAuthor = async(id) => {
 }
 
 module.exports ={selectAuthors,selectAuthor,insertAuthor,updateAuthor,deleteAuthor}
+module.exports = Author

@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize')
 const {DataTypes,Op} = require('sequelize')
+const Author = require('../database/author')
 
 const sequelize = new Sequelize('library_management_system','root','password',{
     dialect:'mysql'
@@ -22,11 +23,13 @@ const Book = sequelize.define('book',{
     book_price:DataTypes.INTEGER
 },{timestamps:false});
 
-// Book.sync({alter:true}).then(() => {
-//     console.log('Books table created successfully');
-// }).catch(() => {
-//     console.log('Error while creating table');
-// })
+Book.belongsTo(Author,{foreignKey:'author_id'}); //foreign key from authors table
+
+Book.sync({alter:true}).then(() => {
+    console.log('Books table created successfully');
+}).catch(() => {
+    console.log('Error while creating table');
+})
 
 //select all books
 const selectBooks = async() => {
@@ -39,11 +42,12 @@ const selectBook = async(id) => {
 }
 
 //insert book
-const insertBook = async(title,genre,price) => {
+const insertBook = async(authorid,title,genre,price) => {
     const book = Book.create({
         book_title:title,
         book_genre:genre,
-        book_price:price
+        book_price:price,
+        author_id:authorid
     })
     return(book)
 }
