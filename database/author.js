@@ -36,4 +36,12 @@ const selectAuthor = async(id) => {
     return(await Author.findByPk(id))
 }
 
-module.exports ={selectAuthors,selectAuthor}
+//insert author
+const insertAuthor = async(name) => {
+    const author = Author.create({
+        author_name:name
+    })
+    return(author)
+}
+
+module.exports ={selectAuthors,selectAuthor,insertAuthor}
