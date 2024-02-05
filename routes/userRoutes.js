@@ -21,7 +21,7 @@ route.post('/user',[
     if(!errors.isEmpty()){
         return res.json({errors:errors.array()})
     }
-    createUser
+    createUser()
     }
 );
 
