@@ -6,11 +6,11 @@ const {homePage,displayBook,displayBooks,createBook,modifyBook,removeBook} = req
 
 route.get('/',homePage);
 
-route.get('/books',displayBooks);
+route.get('/view/books',displayBooks);
 
-route.get('/book/:id',displayBook);
+route.get('/view/book/:id',displayBook);
 
-route.post('/book',[
+route.post('/store/book',[
     body('title').isEmpty().withMessage('Title should not be empty'),
     body('genre').isEmpty().withMessage('Genre should not be empty'),
     body('price').isNumeric().withMessage('Price should be a number')
@@ -22,7 +22,7 @@ route.post('/book',[
     createBook(req,res)
 });
 
-route.put('/book/:id',[
+route.put('/store/book/:id',[
     body('price').isNumeric().withMessage('Price should be a number')
 ], (req,res, next) => {
     console.log("Inside last middleware");
@@ -34,6 +34,6 @@ route.put('/book/:id',[
     //modifyBook(req,res)
 },modifyBook );
 
-route.delete('/book/:id',removeBook);
+route.delete('/delete/book/:id',removeBook);
 
 module.exports = route

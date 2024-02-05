@@ -6,11 +6,11 @@ const {homePage,displayAuthors,displayAuthor,createAuthor,modifyAuthor,removeAut
 
 route.get('/',homePage);
 
-route.get('/authors',displayAuthors);
+route.get('/view/authors',displayAuthors);
 
-route.get('/author/:id',displayAuthor);
+route.get('/view/author/:id',displayAuthor);
 
-route.post('/author',[
+route.post('/store/author',[
     body('name').isEmpty().withMessage('Please provide an author name'),
     body('title').isEmpty().withMessage('Please provide a title'),
     body('genre').isEmpty().withMessage('Please provide a genre'),
@@ -23,7 +23,7 @@ route.post('/author',[
     createAuthor(req,res)
 });
 
-route.put('/author/:id',[
+route.put('/store/author/:id',[
     body('name').isEmpty().withMessage('Please provide an author name')
 ],async (req,res,next) => {
     const errors = validationResult(req);
@@ -33,6 +33,6 @@ route.put('/author/:id',[
     modifyAuthor(req,res)
 });
 
-route.delete('/author/:id',removeAuthor);
+route.delete('/delete/author/:id',removeAuthor);
 
 module.exports = route

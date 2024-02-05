@@ -6,11 +6,11 @@ const {homePage,displayUsers,displayUserById,createUser,changeUser,removeUser} =
 
 route.get('/',homePage);
 
-route.get('/users',displayUsers);
+route.get('/view/users',displayUsers);
 
-route.get('/user/:id',displayUserById);
+route.get('/view/users/:id',displayUserById);
 
-route.post('/user',[
+route.post('/store/user',[
     body('email').notEmpty().isEmail().withMessage('Enter a valid email'),
     body('password').notEmpty().isLength({min:5}).withMessage('Enter minimum 5 characters for password'),
     body('name').notEmpty().withMessage('Enter a valid name'),
@@ -24,7 +24,7 @@ route.post('/user',[
     }
 );
 
-route.put('/user/:id',[
+route.put('/store/user/:id',[
     body('email').isEmail().withMessage('Enter a valid email'),
     body('password').isLength({min:5}).withMessage('Enter minimum 5 characters for password')
 ],async(req,res) => {
@@ -35,6 +35,6 @@ route.put('/user/:id',[
     changeUser
 });
 
-route.delete('/user/:id',removeUser);
+route.delete('/delete/user/:id',removeUser);
 
 module.exports = route;
