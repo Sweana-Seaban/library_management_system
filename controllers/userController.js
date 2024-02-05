@@ -20,16 +20,15 @@ const displayUserById = async(req,res) => {
 
 //create user
 const createUser = async(req,res) => {
-    const {name,email,password,type} = req.body
-    const createdUser = await insertUser(name,email,password,type)
+    const createdUser = await insertUser(name,email,password,isAdmin)
     res.send(createdUser)
 }
 
 //update user
 const changeUser = async(req,res) => {
     const id = req.params.id;
-    const {name,email,password,type} = req.body
-    const changedUser = await updateUser(id,name,email,password,type)
+    const {name,email,password,isAdmin} = req.body
+    const changedUser = await updateUser(id,name,email,password,isAdmin)
     res.send(changedUser)
 }
 

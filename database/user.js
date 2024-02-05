@@ -20,8 +20,10 @@ const User = sequelize.define('user',{
     user_name:DataTypes.STRING,
     user_email:DataTypes.STRING,
     user_password:DataTypes.STRING,
-    user_type:DataTypes.STRING
-},{timestamps:false})
+    user_isAdmin:{
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+}},{timestamps:false})
 
 // User.sync({alter:true}).then(() => {
 //     console.log('Users table created successfully');
@@ -40,23 +42,23 @@ const selectUserById = async(id) => {
 }
 
 //insert user
-const insertUser = async(name,email,password,type) => {
+const insertUser = async(name,email,password,isAdmin) => {
     const user = User.create({
         user_name:name,
         user_email:email,
         user_password:password,
-        user_type:type
+        user_isAdmin:isAdmin
     })
     return user;
 }
 
 //update user
-const updateUser = async(id,name,email,password,type) => {
+const updateUser = async(id,name,email,password,isAdmin) => {
     const user = User.update({
         user_name:name,
         user_email:email,
         user_password:password,
-        user_type:type
+        user_isAdmin:isAdmin
     },{where:{user_id:id}})
     return user;
 }
