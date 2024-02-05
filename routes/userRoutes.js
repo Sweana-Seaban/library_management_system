@@ -15,12 +15,12 @@ route.post('/user',[
     body('password').notEmpty().isLength({min:5}).withMessage('Enter minimum 5 characters for password'),
     body('name').notEmpty().withMessage('Enter a valid name'),
     body('isAdmin').notEmpty().withMessage('Enter a valid value')
-],async(req,res) => {
+],async(req,res,next) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()){
         return res.json({errors:errors.array()})
     }
-    createUser
+    createUser(req,res);
     }
 );
 

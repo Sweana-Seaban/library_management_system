@@ -23,15 +23,16 @@ const Author = sequelize.define('author',{
 
 
 
-Author.sync({alter:true}).then(() => {
-    console.log('Authors table created successfully');
-}).catch(() => {
-    console.log('Error while creating table');
-})
+// Author.sync({alter:true}).then(() => {
+//     console.log('Authors table created successfully');
+// }).catch(() => {
+//     console.log('Error while creating table');
+// })
 
 //select all authors
 const selectAuthors = async() => {
-    return(Author.findAll())
+    const authors = await Author.findAll()
+    return authors
 }
 
 //select author by id
@@ -59,5 +60,5 @@ const deleteAuthor = async(id) => {
     const author = Author.destroy({where:{author_id:id}})
 }
 
-module.exports ={selectAuthors,selectAuthor,insertAuthor,updateAuthor,deleteAuthor}
-module.exports = Author
+module.exports ={selectAuthors, selectAuthor, insertAuthor, updateAuthor,deleteAuthor}
+// module.exports = Author

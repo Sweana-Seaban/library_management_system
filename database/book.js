@@ -23,13 +23,13 @@ const Book = sequelize.define('book',{
     book_price:DataTypes.INTEGER
 },{timestamps:false});
 
-Book.belongsTo(Author,{foreignKey:'author_id'}); //foreign key from authors table
+//Book.belongsTo(Author,{foreignKey:'author_id'}); //foreign key from authors table
 
-Book.sync({alter:true}).then(() => {
-    console.log('Books table created successfully');
-}).catch(() => {
-    console.log('Error while creating table');
-})
+// Book.sync({alter:true}).then(() => {
+//     console.log('Books table created successfully');
+// }).catch(() => {
+//     console.log('Error while creating table');
+// })
 
 //select all books
 const selectBooks = async() => {

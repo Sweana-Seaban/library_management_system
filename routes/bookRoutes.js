@@ -14,23 +14,25 @@ route.post('/book',[
     body('title').isEmpty().withMessage('Title should not be empty'),
     body('genre').isEmpty().withMessage('Genre should not be empty'),
     body('price').isNumeric().withMessage('Price should be a number')
-],async (req,res) => {
+],async (req,res,next) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()){
         return res.json({errors:errors.array()})
     }
-    createBook
+    createBook(req,res)
 });
 
 route.put('/book/:id',[
     body('price').isNumeric().withMessage('Price should be a number')
-],async(req,res) => {
+], (req,res, next) => {
+    console.log("Inside last middleware");
     const errors = validationResult(req);
     if(!errors.isEmpty()){
         return res.json({errors:errors.array()})
     }
-    modifyBook
-});
+    next();
+    //modifyBook(req,res)
+},modifyBook );
 
 route.delete('/book/:id',removeBook);
 

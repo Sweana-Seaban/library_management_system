@@ -1,17 +1,21 @@
-const {selectAuthors,selectAuthor,insertAuthor,updateAuthor,deleteAuthor} = require('../database/author');
+const {selectAuthor,insertAuthor,updateAuthor,deleteAuthor, selectAuthors} = require('../database/author');
 
 
 const homePage = async(req,res) => {
     res.send('Welcome to Authors Page');
 }
 
-const displayAuthors = async(req,res) => {
-    res.send(await selectAuthors());
+const displayAuthors = async (req,res) => {
+    const authors = await selectAuthors()
+    console.log(authors)
+    res.send(authors);
+    
 }
 
 const displayAuthor = async(req,res) => {
     const id = req.params.id
-    res.send(await selectAuthor(id))
+    const author = await selectAuthor(id)
+    res.send(author)
 }
 
 const createAuthor = async(req,res) => {
