@@ -16,16 +16,24 @@ route.post('/user',[
     body('name').notEmpty().withMessage('Enter a valid name'),
     body('isAdmin').notEmpty().withMessage('Enter a valid value')
 ],async(req,res) => {
-    console.log(req);
     const errors = validationResult(req);
     if(!errors.isEmpty()){
         return res.json({errors:errors.array()})
     }
-    createUser()
+    createUser
     }
 );
 
-route.put('/user/:id',changeUser);
+route.put('/user/:id',[
+    body('email').isEmail().withMessage('Enter a valid email'),
+    body('password').isLength({min:5}).withMessage('Enter minimum 5 characters for password')
+],async(req,res) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.json({errors:errors.array()})
+    }
+    changeUser
+});
 
 route.delete('/user/:id',removeUser);
 
