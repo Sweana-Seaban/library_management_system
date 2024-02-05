@@ -4,7 +4,7 @@ const {body,validationResult} = require('express-validator')
 
 const {homePage,displayUsers,displayUserById,createUser,changeUser,removeUser} = require('../controllers/userController')
 
-route.get('/',homePage);
+//route.get('/',homePage);
 
 route.get('/view/users',displayUsers);
 

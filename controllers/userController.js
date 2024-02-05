@@ -1,9 +1,9 @@
 const {selectUsers,selectUserById,insertUser,updateUser,deleteUser} = require('../database/user')
 
 //homepage
-const homePage = (req,res) => {
-    res.send('Welcome to Users page')
-}
+// const homePage = (req,res) => {
+//     res.send('Welcome to Users page')
+// }
 
 //select all
 const displayUsers = async(req,res) => {
@@ -39,4 +39,4 @@ const removeUser = async(req,res) => {
     res.send('User deleted successfully')
 }
 
-module.exports = {homePage,displayUsers,displayUserById,createUser,changeUser,removeUser}
+module.exports = {displayUsers,displayUserById,createUser,changeUser,removeUser}
