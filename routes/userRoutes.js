@@ -2,9 +2,11 @@ const express = require('express')
 const route = express.Router();
 const {body,validationResult} = require('express-validator')
 
+const authenticateToken = require('../middleware')
+
 const {displayUsers,displayUserById,createUser,changeUser,removeUser,userLogin} = require('../controllers/userController')
 
-route.get('/view/users',displayUsers);
+route.get('/view/users',authenticateToken,displayUsers);
 
 route.get('/view/users/:id',displayUserById);
 
@@ -19,7 +21,7 @@ route.post('/store/users',[
         return res.json({errors:errors.array()})
     }
     next();
-    },createUser
+    },authenticateToken,createUser
 );
 
 route.put('/store/users/:id',[
@@ -33,7 +35,7 @@ route.put('/store/users/:id',[
     changeUser(req,res)
 });
 
-// route.post('/login/user',userLogin);
+route.post('/user/login',userLogin);
 
 route.delete('/delete/users/:id',removeUser);
 

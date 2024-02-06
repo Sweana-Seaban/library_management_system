@@ -1,5 +1,10 @@
-const {selectUsers,selectUserById,insertUser,updateUser,deleteUser,loginUser} = require('../database/user_db')
+const {selectUsers,selectUserById,insertUser,updateUser,deleteUser,findUser} = require('../database/user_db')
 const bcrypt = require('bcryptjs')
+const express = require('express')
+const jwt = require('jsonwebtoken')
+const app = express()
+app.use(express.json())
+require('dotenv').config()
 
 //homepage
 // const homePage = (req,res) => {
@@ -9,7 +14,9 @@ const bcrypt = require('bcryptjs')
 //select all
 const displayUsers = async(req,res) => {
     const users = await selectUsers();
-    res.send(users)
+    //res.json(users)
+    //console.log(req.user.isAdmin);
+    res.json(users.filter(user => user.user_name === req.user.name))
 }
 
 //select by id
@@ -24,11 +31,13 @@ const displayUserById = async(req,res) => {
 
 //create user
 const createUser = async(req,res) => {
-    const {name,email,password,isAdmin} = req.body
-    bcrypt.hash(password,10).then(async (hash) => {
+    if(req.user.isAdmin){
+        const {name,email,password,isAdmin} = req.body
+        bcrypt.hash(password,10).then(async (hash) => {
         const createdUser = await insertUser(name,email,hash,isAdmin)
         res.send(createdUser)
-    })
+        })
+    }
 }
 
 //update user
@@ -48,11 +57,17 @@ const removeUser = async(req,res) => {
     res.send('User deleted successfully')
 }
 
-// const userLogin = async(req,res) => {
-//     const {email,password} = req.body
-//     const user = await loginUser(email,password)
-//     console.log(user[0]);
-//     res.send('Welcome')
-// }
+const userLogin = async(req,res) => {
+    const {email,password} = req.body
+    const requesteduser = await findUser(email)
+    //console.log(requesteduser.user_password);
+    bcrypt.compare(password,requesteduser.user_password).then(() => {
+        const user = {name:requesteduser.user_name,password:requesteduser.user_password,isAdmin:requesteduser.user_isAdmin}
+        const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
+        res.json({accessToken : accessToken})
+    })
+    
+    
+}
 
-module.exports = {displayUsers,displayUserById,createUser,changeUser,removeUser}
+module.exports = {displayUsers,displayUserById,createUser,changeUser,removeUser,userLogin}

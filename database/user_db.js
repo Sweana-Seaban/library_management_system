@@ -97,13 +97,12 @@ const deleteUser = async(id) => {
     }
 }
 
-// const loginUser = async(email,password) => {
-//     const user = User.findOne({where:{
-//         user_email:email,
-//         user_password:password
-//     }})
-//     return user
-// }
+const findUser = async(email) => {
+    const user = User.findOne({where:{
+        user_email:email
+    }})
+    return user
+}
 
 
-module.exports = {selectUsers,selectUserById,insertUser,updateUser,deleteUser}
+module.exports = {selectUsers,selectUserById,insertUser,updateUser,deleteUser,findUser}
