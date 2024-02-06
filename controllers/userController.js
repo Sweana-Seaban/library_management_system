@@ -76,12 +76,23 @@ const removeUser = async(req,res) => {
 const userLogin = async(req,res) => {
     const {email,password} = req.body
     const requesteduser = await findUser(email)
-    //console.log(requesteduser.user_password);
-    bcrypt.compare(password,requesteduser.user_password).then(() => {
+    if(requesteduser){
+        //console.log(requesteduser.user_password);
+        bcrypt.compare(password,requesteduser.user_password).then(function (result) {
+            result
+              ? res.status(200).json({
+                  message: "Login successful",
+                  requesteduser,
+                })
+              : res.status(400).json({ message: "Login not succesful" }) //incorrect password
         const user = {name:requesteduser.user_name,password:requesteduser.user_password,isAdmin:requesteduser.user_isAdmin}
         const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
         res.json({accessToken : accessToken})
-    })
+        })   
+    }
+    else{
+        res.send('Login not succesful') //incorrect email
+    }
     
     
 }
