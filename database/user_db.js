@@ -33,43 +33,68 @@ const User = sequelize.define('user',{
 
 //select all
 const selectUsers = async() => {
-    return await User.findAll();
+    try{
+        return await User.findAll();
+    }
+    catch(error){
+        console.log(error);
+    }
 }
 
 //select by id
 const selectUserById = async(id) => {
-    return await User.findByPk(id)
+    try{
+        return await User.findByPk(id)
+    }
+    catch(error){
+        console.log(error);
+    }
 }
 
 //insert user
 const insertUser = async(name,email,password,isAdmin) => {
-    const user = User.create({
-        user_name:name,
-        user_email:email,
-        user_password:password,
-        user_isAdmin:isAdmin
-    })
-    return user;
+    try{
+        const user = User.create({
+            user_name:name,
+            user_email:email,
+            user_password:password,
+            user_isAdmin:isAdmin
+        })
+        return user;
+    }
+    catch(error){
+        console.log(error);
+    }
 }
 
 //update user
 const updateUser = async(id,name,email,password,isAdmin) => {
-    const user = User.update({
-        user_name:name,
-        user_email:email,
-        user_password:password,
-        user_isAdmin:isAdmin
-    },{where:{user_id:id}})
-    return user;
+    try{
+        const user = User.update({
+            user_name:name,
+            user_email:email,
+            user_password:password,
+            user_isAdmin:isAdmin
+        },{where:{user_id:id}})
+        return user;
+    }
+    catch(error){
+        console.log(error);
+    }
 }
 
 //delete user
 const deleteUser = async(id) => {
-    const user = User.destroy({
-        where:{user_id:id}
-    })
-    console.log(user[0]);
-    return user;
+    try{
+        const user = User.destroy({
+            where:{user_id:id}
+        })
+        console.log(user[0]);
+        return user;
+    }
+    catch(error){
+        console.log(error);
+    }
 }
 
 // const loginUser = async(email,password) => {

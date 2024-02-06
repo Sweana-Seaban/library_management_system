@@ -33,39 +33,64 @@ const Book = sequelize.define('book',{
 
 //select all books
 const selectBooks = async() => {
-    return Book.findAll();
+    try{
+        return Book.findAll();
+    }
+    catch(error){
+        console.log(error);
+    }
 }
 
 //select by id
 const selectBook = async(id) => {
-    return Book.findByPk(id);
+    try{
+        return Book.findByPk(id);
+    }
+    catch(error){
+        console.log(error);
+    }
 }
 
 //insert book
 const insertBook = async(authorid,title,genre,price) => {
-    const book = Book.create({
-        book_title:title,
-        book_genre:genre,
-        book_price:price,
-        author_id:authorid
-    })
-    return(book)
+    try{
+        const book = Book.create({
+            book_title:title,
+            book_genre:genre,
+            book_price:price,
+            author_id:authorid
+        })
+        return(book)
+    }
+    catch(error){
+        console.log(error);
+    }
 }
 
 //update book
 const updateBook = async(id,title,genre,price) => {
-    const book = Book.update({
-        book_title:title,
-        book_genre:genre,
-        book_price:price
-    },{where:{book_id:id}})
-    return(book)
+    try{
+        const book = Book.update({
+            book_title:title,
+            book_genre:genre,
+            book_price:price
+        },{where:{book_id:id}})
+        return(book)
+    }
+    catch(error){
+        console.log(error);
+    }
 }
 
 //delete book
 const deleteBook = async(id) => {
-    const book = Book.destroy({where:{book_id:id}})
-    return(book)
+    try{
+        const book = Book.destroy({where:{book_id:id}})
+        return(book)
+    }
+    catch(error){
+        console.log(error);
+    }
 }
 
 module.exports = {selectBook,selectBooks,insertBook,updateBook,deleteBook}
