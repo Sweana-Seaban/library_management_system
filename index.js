@@ -10,7 +10,7 @@ app.use(userRoutes);
 app.use(bookRoutes);
 app.use(authorRoutes);
 
-app.use('/',(req,res) => {
+app.get('/',(req,res) => {
     res.send("Server running")
 });
 

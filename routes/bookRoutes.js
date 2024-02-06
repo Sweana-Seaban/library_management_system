@@ -8,21 +8,21 @@ route.get('/',homePage);
 
 route.get('/view/books',displayBooks);
 
-route.get('/view/book/:id',displayBook);
+route.get('/view/books/:id',displayBook);
 
-route.post('/store/book',[
-    body('title').isEmpty().withMessage('Title should not be empty'),
-    body('genre').isEmpty().withMessage('Genre should not be empty'),
+route.post('/store/books',[
+    body('title').notEmpty().withMessage('Title should not be empty'),
+    body('genre').notEmpty().withMessage('Genre should not be empty'),
     body('price').isNumeric().withMessage('Price should be a number')
 ],async (req,res,next) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()){
         return res.json({errors:errors.array()})
     }
-    createBook(req,res)
-});
+    next();
+},createBook);
 
-route.put('/store/book/:id',[
+route.put('/store/books/:id',[
     body('price').isNumeric().withMessage('Price should be a number')
 ], (req,res, next) => {
     console.log("Inside last middleware");
@@ -34,6 +34,6 @@ route.put('/store/book/:id',[
     //modifyBook(req,res)
 },modifyBook );
 
-route.delete('/delete/book/:id',removeBook);
+route.delete('/delete/books/:id',removeBook);
 
 module.exports = route

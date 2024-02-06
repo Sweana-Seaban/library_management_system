@@ -57,7 +57,7 @@ const updateAuthor = async(id,name) => {
 
 //delete author
 const deleteAuthor = async(id) => {
-    const author = Author.destroy({where:{author_id:id}})
+    const author = Author.findOne({where:{author_id:id}})
 }
 
 module.exports ={selectAuthors, selectAuthor, insertAuthor, updateAuthor,deleteAuthor}

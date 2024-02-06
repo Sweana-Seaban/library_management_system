@@ -68,7 +68,17 @@ const deleteUser = async(id) => {
     const user = User.destroy({
         where:{user_id:id}
     })
+    console.log(user[0]);
     return user;
 }
+
+// const loginUser = async(email,password) => {
+//     const user = User.findOne({where:{
+//         user_email:email,
+//         user_password:password
+//     }})
+//     return user
+// }
+
 
 module.exports = {selectUsers,selectUserById,insertUser,updateUser,deleteUser}

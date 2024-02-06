@@ -1,4 +1,4 @@
-const {selectAuthor,insertAuthor,updateAuthor,deleteAuthor, selectAuthors} = require('../database/author');
+const {selectAuthor,insertAuthor,updateAuthor,deleteAuthor, selectAuthors} = require('../database/author_db');
 
 
 const homePage = async(req,res) => {
@@ -15,7 +15,10 @@ const displayAuthors = async (req,res) => {
 const displayAuthor = async(req,res) => {
     const id = req.params.id
     const author = await selectAuthor(id)
-    res.send(author)
+    if(!author)
+        res.send('Author does not exist')
+    else
+        res.send(author)
 }
 
 const createAuthor = async(req,res) => {

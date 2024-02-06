@@ -8,31 +8,20 @@ route.get('/',homePage);
 
 route.get('/view/authors',displayAuthors);
 
-route.get('/view/author/:id',displayAuthor);
+route.get('/view/authors/:id',displayAuthor);
 
-route.post('/store/author',[
-    body('name').isEmpty().withMessage('Please provide an author name'),
-    body('title').isEmpty().withMessage('Please provide a title'),
-    body('genre').isEmpty().withMessage('Please provide a genre'),
-    body('price').isNumeric().withMessage('Please provide a number for price')
+route.post('/store/authors',[
+    body('name').notEmpty().withMessage('Please provide an author name')
 ],async (req,res,next) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()){
         return res.json({errors:errors.array()})
     }
-    createAuthor(req,res)
-});
+    next();
+},createAuthor);
 
-route.put('/store/author/:id',[
-    body('name').isEmpty().withMessage('Please provide an author name')
-],async (req,res,next) => {
-    const errors = validationResult(req);
-    if(!errors.isEmpty()){
-        return res.json({errors:errors.array()})
-    }
-    modifyAuthor(req,res)
-});
+route.put('/store/authors/:id',modifyAuthor);
 
-route.delete('/delete/author/:id',removeAuthor);
+route.delete('/delete/authors/:id',removeAuthor);
 
 module.exports = route

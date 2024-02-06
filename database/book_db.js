@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 const {DataTypes,Op} = require('sequelize')
-const Author = require('../database/author')
+const Author = require('./author_db')
 
 const sequelize = new Sequelize('library_management_system','root','password',{
     dialect:'mysql'

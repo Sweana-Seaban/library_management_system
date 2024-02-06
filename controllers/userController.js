@@ -1,4 +1,5 @@
-const {selectUsers,selectUserById,insertUser,updateUser,deleteUser} = require('../database/user')
+const {selectUsers,selectUserById,insertUser,updateUser,deleteUser,loginUser} = require('../database/user_db')
+const bcrypt = require('bcryptjs')
 
 //homepage
 // const homePage = (req,res) => {
@@ -15,21 +16,29 @@ const displayUsers = async(req,res) => {
 const displayUserById = async(req,res) => {
     const user_id = req.params.id
     const user = await selectUserById(user_id)
-    res.send(user)
+    if(user)
+        res.send(user)
+    else
+        res.send('User does not exist')
 }
 
 //create user
 const createUser = async(req,res) => {
-    const createdUser = await insertUser(name,email,password,isAdmin)
-    res.send(createdUser)
+    const {name,email,password,isAdmin} = req.body
+    bcrypt.hash(password,10).then(async (hash) => {
+        const createdUser = await insertUser(name,email,hash,isAdmin)
+        res.send(createdUser)
+    })
 }
 
 //update user
 const changeUser = async(req,res) => {
     const id = req.params.id;
     const {name,email,password,isAdmin} = req.body
-    const changedUser = await updateUser(id,name,email,password,isAdmin)
-    res.send(changedUser)
+    bcrypt.hash(password,10).then(async (hash) => {
+        const changedUser = await updateUser(id,name,email,hash,isAdmin)
+        res.send('User updated successfully')
+    })
 }
 
 //delete user
@@ -38,5 +47,12 @@ const removeUser = async(req,res) => {
     const user = await deleteUser(id)
     res.send('User deleted successfully')
 }
+
+// const userLogin = async(req,res) => {
+//     const {email,password} = req.body
+//     const user = await loginUser(email,password)
+//     console.log(user[0]);
+//     res.send('Welcome')
+// }
 
 module.exports = {displayUsers,displayUserById,createUser,changeUser,removeUser}
