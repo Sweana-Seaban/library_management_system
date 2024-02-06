@@ -38,23 +38,39 @@ const createUser = async(req,res) => {
         res.send(createdUser)
         })
     }
+    else{
+        res.send('Unauthenticated')
+    }
 }
 
 //update user
 const changeUser = async(req,res) => {
-    const id = req.params.id;
-    const {name,email,password,isAdmin} = req.body
-    bcrypt.hash(password,10).then(async (hash) => {
+    if(req.user.isAdmin){
+        console.log('starting query');
+        const id = req.params.id;
+        const {name,email,password,isAdmin} = req.body
+        bcrypt.hash(password,10).then(async (hash) => {
         const changedUser = await updateUser(id,name,email,hash,isAdmin)
         res.send('User updated successfully')
-    })
+        })
+    }
+    else{
+        res.send('Unauthenticated')
+    }
 }
 
 //delete user
 const removeUser = async(req,res) => {
-    const id = req.params.id
-    const user = await deleteUser(id)
-    res.send('User deleted successfully')
+    if(req.user.isAdmin){
+        console.log('starting query');
+        const id = req.params.id
+        const user = await deleteUser(id)
+        res.send('User deleted successfully')
+    }
+    else{
+        res.send('Unauthenticated')
+    }
+    
 }
 
 const userLogin = async(req,res) => {

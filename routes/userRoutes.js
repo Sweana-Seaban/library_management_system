@@ -32,11 +32,11 @@ route.put('/store/users/:id',[
     if(!errors.isEmpty()){
         return res.json({errors:errors.array()})
     }
-    changeUser(req,res)
-});
+    next();
+},authenticateToken,changeUser);
 
 route.post('/user/login',userLogin);
 
-route.delete('/delete/users/:id',removeUser);
+route.delete('/delete/users/:id',authenticateToken,removeUser);
 
 module.exports = route;
