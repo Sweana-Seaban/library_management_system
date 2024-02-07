@@ -24,8 +24,12 @@ const displayUsers = async(req,res) => {
 const displayUserById = async(req,res) => {
     const user_id = req.params.id
     const user = await selectUserById(user_id)
-    if(user)
-        res.send(user)
+    if(user){
+        if(user.user_name === req.user.name)
+            res.send(user)
+        else
+            res.sendStatus(403)
+    }
     else
         res.send('User does not exist')
 }

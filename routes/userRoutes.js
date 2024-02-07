@@ -12,7 +12,7 @@ const jwt = require('jsonwebtoken')
 
 route.get('/view/users',authenticateToken,displayUsers);
 
-route.get('/view/users/:id',displayUserById);
+route.get('/view/users/:id',authenticateToken,displayUserById);
 
 route.post('/store/users',[
     body('email').notEmpty().isEmail().withMessage('Enter a valid email'),
