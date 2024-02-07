@@ -6,7 +6,6 @@ const app = express()
 app.use(express.json())
 require('dotenv').config()
 const {generateAccessToken} = require('../middleware')
-let refreshTokens = []
 
 //homepage
 // const homePage = (req,res) => {

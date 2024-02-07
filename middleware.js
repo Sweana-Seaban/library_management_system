@@ -19,17 +19,18 @@ function generateAccessToken(user) {
     return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '20s'})
 }
 
-// function refreshTokenAuthenticate(req,res,next) {
-//     const refreshToken = req.body.token
-//     refreshTokens.push(refreshToken)
-//     if(refreshToken == null) return res.send('Refresh Token is null')
-//     if(!refreshTokens.includes(refreshToken)) return res.send('Refresh Token not included in lists')
-//     jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err,user) => {
-//         if (err) return res.sendStatus(403)
-//         const accessToken = generateAccessToken(user)
-//     res.json({accessToken : accessToken})
-//     next()
-//     })
-// }
+function refreshTokenAuthenticate(req,res,next) {
+    const refreshToken = req.body.token
+    refreshTokens.push(refreshToken)
+    if(refreshToken == null) return res.send('Refresh Token is null')
+        if(!refreshTokens.includes(refreshToken)) return res.send('Refresh Token not included in lists')
+        jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err,user) => {
+            if (err) return res.sendStatus(403)
+            console.log(user);
+            const accessToken = generateAccessToken({name: user.name})
+            res.json({accessToken : accessToken})
+        //next()
+        })
+}
 
-module.exports = {authenticateToken,generateAccessToken}
+module.exports = {authenticateToken,generateAccessToken,refreshTokenAuthenticate}
