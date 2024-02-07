@@ -9,7 +9,9 @@ function authenticateToken(req,res,next) {
     if(token == null) 
         return res.sendStatus(401)
     jwt.verify(token,process.env.ACCESS_TOKEN_SECRET, (err,user) => {
-        if(err) return res.sendStatus(403)
+        if(err) 
+        return res.send(err)
+            //return res.sendStatus(403)
         req.user = user
         next()
     })
@@ -26,8 +28,8 @@ function refreshTokenAuthenticate(req,res,next) {
         if(!refreshTokens.includes(refreshToken)) return res.send('Refresh Token not included in lists')
         jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err,user) => {
             if (err) return res.sendStatus(403)
-            console.log(user);
-            const accessToken = generateAccessToken({name: user.name})
+            //console.log(user);
+            const accessToken = generateAccessToken({name:user.name,password:user.password,isAdmin:user.isAdmin})
             res.json({accessToken : accessToken})
         //next()
         })

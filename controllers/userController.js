@@ -47,7 +47,7 @@ const createUser = async(req,res) => {
 //update user
 const changeUser = async(req,res) => {
     if(req.user.isAdmin){
-        console.log('starting query');
+        //console.log('starting query');
         const id = req.params.id;
         const {name,email,password,isAdmin} = req.body
         bcrypt.hash(password,10).then(async (hash) => {
@@ -63,7 +63,7 @@ const changeUser = async(req,res) => {
 //delete user
 const removeUser = async(req,res) => {
     if(req.user.isAdmin){
-        console.log('starting query');
+        //console.log('starting query');
         const id = req.params.id
         const user = await deleteUser(id)
         res.send('User deleted successfully')
@@ -71,7 +71,6 @@ const removeUser = async(req,res) => {
     else{
         res.send('Unauthenticated')
     }
-    
 }
 
 const userLogin = async(req,res) => {
