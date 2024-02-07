@@ -4,15 +4,17 @@ const {body,validationResult} = require('express-validator')
 
 const {authenticateToken, generateAccessToken, refreshTokenAuthenticate} = require('../middleware')
 
-const {displayUsers,displayUserById,createUser,changeUser,removeUser,userLogin} = require('../controllers/userController')
+const {displayUserById,createUser,changeUser,removeUser,userLogin} = require('../controllers/userController')
+
+const userController = require('../controllers/userController')
 
 let refreshTokens = []
 
 const jwt = require('jsonwebtoken')
 
-route.get('/view/users',authenticateToken,displayUsers);
+route.get('/view/users',authenticateToken,userController.displayUsers);
 
-route.get('/view/users/:id',authenticateToken,displayUserById);
+route.get('/view/users/:id',authenticateToken,userController.displayUserById);
 
 route.post('/store/users',[
     body('email').notEmpty().isEmail().withMessage('Enter a valid email'),
@@ -25,7 +27,7 @@ route.post('/store/users',[
         return res.json({errors:errors.array()})
     }
     next();
-    },authenticateToken,createUser
+    },authenticateToken,userController.createUser
 );
 
 route.put('/store/users/:id',[
@@ -37,11 +39,11 @@ route.put('/store/users/:id',[
         return res.json({errors:errors.array()})
     }
     next();
-},authenticateToken,changeUser);
+},authenticateToken,userController.changeUser);
 
-route.post('/user/login',userLogin);
+route.post('/user/login',userController.userLogin);
 
-route.delete('/delete/users/:id',authenticateToken,removeUser);
+route.delete('/delete/users/:id',authenticateToken,userController.removeUser);
 
 route.post('/token',refreshTokenAuthenticate);
 

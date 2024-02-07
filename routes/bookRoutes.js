@@ -2,13 +2,13 @@ const express = require('express')
 const route = express.Router();
 const {body, validationResult} = require('express-validator')
 
-const {homePage,displayBook,displayBooks,createBook,modifyBook,removeBook} = require('../controllers/bookController')
+//const {homePage,displayBook,displayBooks,createBook,modifyBook,removeBook} = require('../controllers/bookController')
 
-route.get('/',homePage);
+const bookController = require('../controllers/bookController')
 
-route.get('/view/books',displayBooks);
+route.get('/view/books',bookController.displayBooks);
 
-route.get('/view/books/:id',displayBook);
+route.get('/view/books/:id',bookController.displayBook);
 
 route.post('/store/books',[
     body('title').notEmpty().withMessage('Title should not be empty'),
@@ -20,7 +20,7 @@ route.post('/store/books',[
         return res.json({errors:errors.array()})
     }
     next();
-},createBook);
+},bookController.createBook);
 
 route.put('/store/books/:id',[
     body('price').isNumeric().withMessage('Price should be a number')
@@ -32,8 +32,8 @@ route.put('/store/books/:id',[
     }
     next();
     //modifyBook(req,res)
-},modifyBook );
+},bookController.modifyBook );
 
-route.delete('/delete/books/:id',removeBook);
+route.delete('/delete/books/:id',bookController.removeBook);
 
 module.exports = route

@@ -2,13 +2,13 @@ const express = require('express')
 const route = express.Router();
 const {body,validationResult} = require('express-validator')
 
-const {homePage,displayAuthors,displayAuthor,createAuthor,modifyAuthor,removeAuthor} = require('../controllers/authorController')
+//const {homePage,displayAuthors,displayAuthor,createAuthor,modifyAuthor,removeAuthor} = require('../controllers/authorController')
 
-route.get('/',homePage);
+const authorController = require('../controllers/authorController')
 
-route.get('/view/authors',displayAuthors);
+route.get('/view/authors',authorController.displayAuthors);
 
-route.get('/view/authors/:id',displayAuthor);
+route.get('/view/authors/:id',authorController.displayAuthor);
 
 route.post('/store/authors',[
     body('name').notEmpty().withMessage('Please provide an author name')
@@ -18,10 +18,10 @@ route.post('/store/authors',[
         return res.json({errors:errors.array()})
     }
     next();
-},createAuthor);
+},authorController.createAuthor);
 
-route.put('/store/authors/:id',modifyAuthor);
+route.put('/store/authors/:id',authorController.modifyAuthor);
 
-route.delete('/delete/authors/:id',removeAuthor);
+route.delete('/delete/authors/:id',authorController.removeAuthor);
 
 module.exports = route

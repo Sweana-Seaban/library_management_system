@@ -13,7 +13,7 @@ const {generateAccessToken} = require('../middleware')
 // }
 
 //select all
-const displayUsers = async(req,res) => {
+module.exports.displayUsers = async(req,res) => {
     const users = await selectUsers();
     //res.json(users)
     //console.log(req.user.isAdmin);
@@ -21,7 +21,7 @@ const displayUsers = async(req,res) => {
 }
 
 //select by id
-const displayUserById = async(req,res) => {
+module.exports.displayUserById = async(req,res) => {
     const user_id = req.params.id
     const user = await selectUserById(user_id)
     if(user){
@@ -35,7 +35,7 @@ const displayUserById = async(req,res) => {
 }
 
 //create user
-const createUser = async(req,res) => {
+module.exports.createUser = async(req,res) => {
     if(req.user.isAdmin){
         const {name,email,password,isAdmin} = req.body
         bcrypt.hash(password,10).then(async (hash) => {
@@ -49,7 +49,7 @@ const createUser = async(req,res) => {
 }
 
 //update user
-const changeUser = async(req,res) => {
+module.exports.changeUser = async(req,res) => {
     if(req.user.isAdmin){
         //console.log('starting query');
         const id = req.params.id;
@@ -65,7 +65,7 @@ const changeUser = async(req,res) => {
 }
 
 //delete user
-const removeUser = async(req,res) => {
+module.exports.removeUser = async(req,res) => {
     if(req.user.isAdmin){
         //console.log('starting query');
         const id = req.params.id
@@ -77,7 +77,7 @@ const removeUser = async(req,res) => {
     }
 }
 
-const userLogin = async(req,res) => {
+module.exports.userLogin = async(req,res) => {
     const {email,password} = req.body
     const requesteduser = await findUser(email)
     if(requesteduser){
@@ -108,4 +108,4 @@ const userLogin = async(req,res) => {
     
 }
 
-module.exports = {displayUsers,displayUserById,createUser,changeUser,removeUser,userLogin}
+//module.exports = {displayUserById,createUser,changeUser,removeUser,userLogin}
