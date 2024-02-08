@@ -1,11 +1,11 @@
-const Sequelize = require('sequelize');
-const {DataTypes} = require('sequelize');
+const Sequelize = require("sequelize");
+const {DataTypes} = require("sequelize");
 
-const sequelize =new Sequelize('library_management_system','root','password',{
-	dialect:'mysql'
+const sequelize =new Sequelize("library_management_system","root","password",{
+	dialect:"mysql"
 });
 
-const User = sequelize.define('user',{
+const User = sequelize.define("user",{
 	user_id:{
 		type:DataTypes.INTEGER,
 		primaryKey:true,

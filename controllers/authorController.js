@@ -1,4 +1,4 @@
-const {selectAuthor,insertAuthor,updateAuthor,deleteAuthor, selectAuthors} = require('../database/author_db');
+const {selectAuthor,insertAuthor,updateAuthor,deleteAuthor, selectAuthors} = require("../database/author_db");
 
 module.exports.displayAuthors = async (req,res) => {
 	const authors = await selectAuthors();
@@ -11,7 +11,7 @@ module.exports.displayAuthor = async(req,res) => {
 	const id = req.params.id;
 	const author = await selectAuthor(id);
 	if(!author)
-		res.send('Author does not exist');
+		res.send("Author does not exist");
 	else
 		res.send(author);
 };
@@ -19,18 +19,18 @@ module.exports.displayAuthor = async(req,res) => {
 module.exports.createAuthor = async(req,res) => {
 	const {name} = req.body;
 	const author = insertAuthor(name);
-	res.send('Author created successfully');
+	res.send("Author created successfully");
 };
 
 module.exports.modifyAuthor = async(req,res) => {
 	const id = req.params.id;
 	const {name} = req.body;
 	const author = updateAuthor(id,name);
-	res.send('Author updated successfully');
+	res.send("Author updated successfully");
 };
 
 module.exports.removeAuthor = async(req,res) => {
 	const id =req.params.id;
 	const author = deleteAuthor(id);
-	res.send('Author deleted successfully');
+	res.send("Author deleted successfully");
 };

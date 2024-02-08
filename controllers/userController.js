@@ -1,11 +1,11 @@
-const {selectUsers,selectUserById,insertUser,updateUser,deleteUser,findUser} = require('../database/user_db');
-const bcrypt = require('bcryptjs');
-const express = require('express');
-const jwt = require('jsonwebtoken');
+const {selectUsers,selectUserById,insertUser,updateUser,deleteUser,findUser} = require("../database/user_db");
+const bcrypt = require("bcryptjs");
+const express = require("express");
+const jwt = require("jsonwebtoken");
 const app = express();
 app.use(express.json());
-require('dotenv').config();
-const {generateAccessToken} = require('../middleware');
+require("dotenv").config();
+const {generateAccessToken} = require("../middleware");
 
 //select all
 module.exports.displayUsers = async(req,res) => {
@@ -24,7 +24,7 @@ module.exports.displayUserById = async(req,res) => {
 			res.sendStatus(403);
 	}
 	else
-		res.send('User does not exist');
+		res.send("User does not exist");
 };
 
 //create user
@@ -37,7 +37,7 @@ module.exports.createUser = async(req,res) => {
 		});
 	}
 	else{
-		res.send('Unauthenticated');
+		res.send("Unauthenticated");
 	}
 };
 
@@ -49,11 +49,11 @@ module.exports.changeUser = async(req,res) => {
 		const {name,email,password,isAdmin} = req.body;
 		bcrypt.hash(password,10).then(async (hash) => {
 			const changedUser = await updateUser(id,name,email,hash,isAdmin);
-			res.send('User updated successfully');
+			res.send("User updated successfully");
 		});
 	}
 	else{
-		res.send('Unauthenticated');
+		res.send("Unauthenticated");
 	}
 };
 
@@ -62,10 +62,10 @@ module.exports.removeUser = async(req,res) => {
 	if(req.user.isAdmin){
 		const id = req.params.id;
 		const user = await deleteUser(id);
-		res.send('User deleted successfully');
+		res.send("User deleted successfully");
 	}
 	else{
-		res.send('Unauthenticated');
+		res.send("Unauthenticated");
 	}
 };
 
@@ -75,7 +75,7 @@ module.exports.userLogin = async(req,res) => {
 	if(requesteduser){
 		bcrypt.compare(password,requesteduser.user_password).then(function (result) {
 			result
-				? console.log('Login Successful'):console.log('Login not successful'); //incorrect password
+				? console.log("Login Successful"):console.log("Login not successful"); //incorrect password
 			const user = {name:requesteduser.user_name,password:requesteduser.user_password,isAdmin:requesteduser.user_isAdmin};
 			const accessToken = generateAccessToken(user);
 			const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
@@ -83,7 +83,7 @@ module.exports.userLogin = async(req,res) => {
 		});   
 	}
 	else{
-		res.send('Login not succesful'); //incorrect email
+		res.send("Login not succesful"); //incorrect email
 	}
     
     
