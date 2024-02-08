@@ -1,44 +1,38 @@
-const express = require('express')
+const express = require('express');
 const route = express.Router();
-const {body,validationResult} = require('express-validator')
+const {body,validationResult} = require('express-validator');
 
-const {authenticateToken, generateAccessToken, refreshTokenAuthenticate} = require('../middleware')
+const {authenticateToken, refreshTokenAuthenticate} = require('../middleware');
 
-const {displayUserById,createUser,changeUser,removeUser,userLogin} = require('../controllers/userController')
-
-const userController = require('../controllers/userController')
-
-let refreshTokens = []
-
-const jwt = require('jsonwebtoken')
+const userController = require('../controllers/userController');
 
 route.get('/view/users',authenticateToken,userController.displayUsers);
 
 route.get('/view/users/:id',authenticateToken,userController.displayUserById);
 
 route.post('/store/users',[
-    body('email').notEmpty().isEmail().withMessage('Enter a valid email'),
-    body('password').notEmpty().isLength({min:5}).withMessage('Enter minimum 5 characters for password'),
-    body('name').notEmpty().withMessage('Enter a valid name'),
-    body('isAdmin').notEmpty().withMessage('Enter a valid value')
+	body('email').notEmpty().isEmail().withMessage('Enter a valid email'),
+	body('password').notEmpty().isLength({min:5}).withMessage('Enter minimum 5 characters for password'),
+	body('name').notEmpty().withMessage('Enter a valid name'),
+	body('isAdmin').notEmpty().withMessage('Enter a valid value')
 ],async(req,res,next) => {
-    const errors = validationResult(req);
-    if(!errors.isEmpty()){
-        return res.json({errors:errors.array()})
-    }
-    next();
-    },authenticateToken,userController.createUser
+	const errors = validationResult(req);
+	if(!errors.isEmpty()){
+		return res.json({errors:errors.array()});
+	}
+	next();
+},authenticateToken,userController.createUser
 );
 
 route.put('/store/users/:id',[
-    body('email').isEmail().withMessage('Enter a valid email'),
-    body('password').isLength({min:5}).withMessage('Enter minimum 5 characters for password')
+	body('email').isEmail().withMessage('Enter a valid email'),
+	body('password').isLength({min:5}).withMessage('Enter minimum 5 characters for password')
 ],async(req,res,next) => {
-    const errors = validationResult(req);
-    if(!errors.isEmpty()){
-        return res.json({errors:errors.array()})
-    }
-    next();
+	const errors = validationResult(req);
+	if(!errors.isEmpty()){
+		return res.json({errors:errors.array()});
+	}
+	next();
 },authenticateToken,userController.changeUser);
 
 route.post('/user/login',userController.userLogin);
